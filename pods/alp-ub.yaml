@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: os-pod
+spec:
+  containers:
+    - name: ub
+      image: ubuntu
+      command: ["/bin/sleep","3600d"]
+      volumeMounts:
+        - name: os-volume
+          mountPath: /mntvol1
+    - name: al
+      image: alpine
+      command: ["sleep","infinity"]
+      volumeMounts:
+        - name: os-volume
+          mountPath: /mntvol1
+  volumes:
+    - name: os-volume
+      emptyDir: {}
+

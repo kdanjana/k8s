@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:  
+  name: hname-ingress
+  namespace: ingress-prac
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+   - host: dumdum.dum
+     http:
+      paths: 
+       - path: /ng
+         pathType: Prefix
+         backend:
+           service:
+             name: nginx-service
+             port: 
+               number: 80
+       - path: /httpd
+         pathType: Prefix
+         backend:
+           service:
+             name: httpd-service
+             port:
+               number: 8080

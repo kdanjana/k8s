@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wp-dep
+  namespace: wp-ns
+  labels:
+    dep: wp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      dep: wp
+  template:
+    metadata:
+      name: wp-pod
+      labels:
+        dep: wp
+    spec:
+      containers:
+         - name: wp-container
+           image: wordpress
+           ports:
+             - containerPort: 80
+           env:
+             - name: WORDPRESS_DB_HOST
+               valueFrom:
+                 configMapKeyRef:
+                   name: mysql-configmap
+                   key: mysqldb_url
+             - name: WORDPRESS_DB_USER
+               valueFrom:
+                 secretKeyRef:
+                   name: mysql-secret
+                   key: username
+             - name: WORDPRESS_DB_PASSWORD
+               valueFrom:
+                 secretKeyRef:
+                   name: mysql-secret
+                   key: user_passwd
+             - name: WORDPRESS_DB_NAME
+               valueFrom:
+                 secretKeyRef:
+                   name: mysql-secret
+                   key: dbname
+             - name: WORDPRESS_TABLE_PREFIX
+               valueFrom:
+                 secretKeyRef:
+                   name: mysql-secret
+                   key: dbprefix
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: wp-service
+  namespace: wp-ns
+spec:
+  selector:
+    dep: wp
+  ports:
+   - port: 80
+     targetPort: 80
+     protocol: TCP
+
+

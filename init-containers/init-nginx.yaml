@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: init-nginx
+  name: init-nginx
+spec:
+  containers:
+  - image: nginx
+    name: cn
+    imagePullPolicy: IfNotPresent
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: nginx-vol
+      mountPath: /usr/share/nginx/html
+  - name: ci
+    image: alpine
+    command: ["sleep","infinity"]
+    args:
+    - "mkdir"
+    - "html"
+    - "cd"
+    - "html"
+    - "wget"
+    - "-O"
+    - "index.html"
+    - "https://raw.githubusercontent.com/dubareddy/testcode/master/index.html"
+    volumeMounts:
+    - name: nginx-vol
+      mountPath: /html
+  volumes:
+  - name: nginx-vol
+    emptyDir: {}
