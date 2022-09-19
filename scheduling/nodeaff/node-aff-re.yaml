@@ -19,10 +19,12 @@ spec:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          - key: sony
+          - key: zone
             operator: In
             values:
             - bowbow
+            - bbb
+            - aaa
 ---
 apiVersion: v1
 kind: Service

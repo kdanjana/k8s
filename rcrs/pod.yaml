@@ -2,14 +2,11 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: p1
+  labels:
+    app: myapp
 spec:
   containers:
   - name: c1
-    image: nginx
+    image: nginx:latest
     ports:
     - containerPort: 80
-  tolerations:
-  - key: "zone"
-    operator: "Equal"
-    value: "aaa"
-    effect: "NoSchedule"
