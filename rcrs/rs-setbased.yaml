@@ -1,18 +1,29 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: rs1
+  name: rs22
   labels:
     app: myapp
+    app1: dev
 spec:
   replicas: 3
   selector:
-    matchLabels:
-      app: myapp
+    matchExpressions:
+    - key: app
+      operator: In
+      values:
+      - myapp
+    - key: app1
+      operator: NotIn
+      values: [test]
+      #- key: app1
+      #operator: In
+      #values: [dev]
   template:
     metadata:
       labels:
          app: myapp
+         app1: dev
     spec:
      containers:
      - name: c1
@@ -23,13 +34,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rs-serv
+  name: rs22-serv
 spec:
   selector:
     app: myapp
+    app1: dev
   type: NodePort
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30001
+    nodePort: 30012
 
