@@ -1,3 +1,4 @@
+# pod gets deployed only on node that matches this tolerations
 apiVersion: v1
 kind: Pod
 metadata:

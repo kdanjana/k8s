@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pd1
+spec:
+  containers:
+  - name: con1
+    image: nginx
+    ports:
+    - containerPort: 80
+  # if u give both node selector and tole. then the node must have both fot
+  # pd1 to get deployed
+  nodeSelector:
+    zone: aaa
+  tolerations:
+  - key: color 
+    operator: Equal
+    value: green
+    effect: NoSchedule
