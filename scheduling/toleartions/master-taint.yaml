@@ -9,7 +9,7 @@ spec:
     ports:
     - containerPort: 80
   tolerations:
-  - key: "zone"
-    operator: "Equal"
-    value: "bbb"
-    effect: "NoSchedule"
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoSchedule
+
