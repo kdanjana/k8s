@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: rs1
+spec:
+  replicas: 4
+  selector:
+    # In and In then either can be labels
+    # if In and NotIn then both should be satisfied
+    matchExpressions:
+    - key: c
+      operator: NotIn
+      values:
+      - cat
+    - key: a
+      operator: In
+      values:
+      - apple
+  template:
+    metadata:
+      name: p1
+      labels:
+        a: apple
+        b: bat3
+        c: cat2
+    spec:
+      containers:
+      - name: c1
+        image: nginx
+      
