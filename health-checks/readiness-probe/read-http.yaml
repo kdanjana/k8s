@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: read-dep
+  labels:
+    app: dep
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dep
+  template:
+    metadata:
+      labels:
+        app: dep
+    spec:
+      containers:
+      - name: c1
+        image: nginx
+        ports:
+        - containerPort: 80
+        #args:
+        #- /bin/sh
+        #- -c
+        #- touch /tmp/healthy; sleep 30; rm -f /tmp/healthy; sleep 600
+        #- sleep 10; touch /1.txt; sleep 20; rm -f 1.txt; sleep 100
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10 #10sec after creating cont. kubelet performs first probe
+          # for those initial 10sec u cant access the nginx
+          periodSeconds: 100
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dep-serv
+spec:
+  selector:
+    app: dep
+  ports:
+  - port: 80
+    targetPort: 80
+
