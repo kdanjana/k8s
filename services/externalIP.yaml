@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: dep1
+  name: dep1
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: dep1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: dep1
+        a: apple
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dep-serv
+spec:
+ selector:
+   app: dep1
+ ports:
+ - port: 80
+   targetPort: 80
+   # what i found -- u can access pod from inside the cluster
+   # using curl <IP address >, ip address is one of nodes
+ externalIPs:
+    - 52.87.159.196
+
