@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: httpd-configmap
-data:
-  index.html: |
-     <html><body><h1>ayya baboy!</h1></body></html>
