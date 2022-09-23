@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cmap
+data:
+  WORDPRESS_DB_USER: root
+  WORDPRESS_DB_HOST: db-svc
+  WORDPRESS_DB_PASSWORD: root123
+  WORDPRESS_DB_NAME: wpdb
+  WORDPRESS_TABLE_PREFIX: wp_
+  file1: |
+     this is from config that has env and file
+     file1
+  file2: |
+     from config that has both env and file2

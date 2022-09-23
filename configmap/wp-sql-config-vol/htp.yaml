@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: htp
+  name: htp
+spec:
+  containers:
+  - image: httpd
+    name: htp
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: vol1
+      mountPath: /vol1
+  volumes:
+  - name: vol1
+    configMap:
+      name: cmap
+
+# ubuntu@manager:~/k8s/configmap/wp-sql-config-vol$ kubectl exec -it htp -- bash
+#root@htp:/usr/local/apache2# cd /vol1/
+#root@htp:/vol1# ls
+#WORDPRESS_DB_HOST  WORDPRESS_DB_PASSWORD  WORDPRES_TABLE_PREFIX  file2
+#WORDPRESS_DB_NAME  WORDPRESS_DB_USER      file1
+#root@htp:/vol1#
+
