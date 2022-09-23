@@ -22,3 +22,17 @@ spec:
         operator: Equal
         value: aaa
         effect: NoSchedule
+        
+        #ubuntu@manager:~/k8s/daemonset$ kubectl describe node manager | grep "Taint" 
+            #Taints:             node-role.kubernetes.io/control-plane:NoSchedule
+         #ubuntu@manager:~/k8s/daemonset$ kubectl describe node node1 | grep "Taint" 
+          #    Taints:             zone1=aaa:NoSchedule
+         #ubuntu@manager:~/k8s/daemonset$ kubectl describe node node2 | grep "Taint" -A 3
+           #Taints:             <none>
+        # ubuntu@manager:~/k8s/daemonset$ kubectl create -f multitol-nodes-ds.yaml
+            #daemonset.apps/ds-master created
+        # ubuntu@manager:~/k8s/daemonset$ kubectl get pods -o wide
+              NAME              READY   STATUS    RESTARTS   AGE   IP          NODE      NOMINATED NODE   READINESS GATES
+              ds-master-b4qrj   1/1     Running   0          5s    10.44.0.2   node1     <none>           <none>
+              ds-master-hz78j   1/1     Running   0          5s    10.36.0.1   node2     <none>           <none>
+              ds-master-lfctc   1/1     Running   0          5s    10.32.0.3   manager   <none>           <none>
