@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: httpd-configmap
+data:
+  index.html: |
+     <html><body><h1>hi ffrom configmap used as volume! </h1></body></html>
+  index1.html: |
+     <h1/> hii from configmap used as volume </h1>
