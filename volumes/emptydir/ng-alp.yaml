@@ -1,3 +1,6 @@
+# emptydir shares data among containers in the same pod\
+# here c1's html dir is overwritten with c2's vol12 because they are
+# both shared by emptyDir
 apiVersion: v1
 kind: Pod
 metadata:
