@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: p1
+  name: p1
+spec:
+  containers:
+  - image: ubuntu
+    name: c1
+    command: ["bash","-c","sleep 10000"]
+  - image: jenkins/jenkins:lts
+    name: c2
+    ports:
+    - containerPort: 8080
