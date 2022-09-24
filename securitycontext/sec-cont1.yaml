@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: p1
+  name: p1
+spec:
+  securityContext:
+    runAsUser: 2000
+  containers:
+  - image: ubuntu
+    name: c1
+    command: ["bash","-c","sleep 10000"]
+    securityContext:
+      runAsUser: 3000
+  - image: tomcat
+    name: c2
+    ports:
+    - containerPort: 8080
+
+ 
+      #ubuntu@manager:~/k8s/securitycontext$ kubectl exec -it p1 -c c1 -- bash
+      #I have no name!@p1:/$ whoami
+      #whoami: cannot find name for user ID 3000
+      #I have no name!@p1:/$
+
+      #ubuntu@manager:~/k8s/securitycontext$ kubectl exec -it p1 -c c2 -- bash
+      #I have no name!@p1:/usr/local/tomcat$ whoami
+      #whoami: cannot find name for user ID 2000
+      #I have no name!@p1:/usr/local/tomcat$
+
