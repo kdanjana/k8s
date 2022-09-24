@@ -14,3 +14,15 @@ spec:
     name: c2
     ports:
     - containerPort: 8080
+
+      #ubuntu@manager:~/k8s/securitycontext$ kubectl exec -it p1 -c c1 -- bash
+      #root@p1:/# whoami
+      #root
+      #root@p1:/#
+
+      #ubuntu@manager:~/k8s/securitycontext$ kubectl exec -it p1 -c c2 -- bash
+      #jenkins@p1:/$ whoami
+      #jenkins
+      #jenkins@p1:/$
+
+
