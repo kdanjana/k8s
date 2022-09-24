@@ -1,0 +1,52 @@
+# here the directory dep-data on host already has a index.html file
+# this index.html will overwrite the index.html in the container
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: dep1
+  name: dep1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dep1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: dep1
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: v1
+          mountPath: /usr/share/nginx/html
+      - name: c2
+        image: alpine
+        command: ["sh","-c","sleep 1000"]
+        volumeMounts:
+        - name: v1
+          mountPath: /v2
+      volumes:
+      - name: v1
+        hostPath:
+          path: /dep-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sevc
+spec:
+  selector:
+    app: dep1
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30005
