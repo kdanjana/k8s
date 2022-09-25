@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: sp-mas
+  name: sp-mas
+spec:
+  containers:
+  - image: nginx
+    name: sp-mas
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+# copy this sp-mas.yaml file to  /etc/kubernetes/manifests/
+# root@manager:/home/ubuntu/k8s/static-pods/sp-default-loc# cp sp-mas.yaml /etc/kubernetes/manifests/sp-mas.yaml
+
+# root@manager:/home/ubuntu/k8s/static-pods/sp-default-loc# ls /etc/kubernetes/manifests/    
+#    etcd.yaml            kube-controller-manager.yaml  sp-mas.yaml
+#    kube-apiserver.yaml  kube-scheduler.yaml
+# ubuntu@manager:~/k8s/static-pods/sp-default-loc$ kubectl get pods -o wide
+#    NAME             READY   STATUS    RESTARTS   AGE   IP          NODE      NOMINATED NODE   READINESS GATES
+#   sp-mas-manager   1/1     Running   0          16s   10.32.0.3   manager   <none>           <none>
+
+# root@manager:/etc/kubernetes/manifests# ls
+#etcd.yaml            kube-controller-manager.yaml  sp-mas.yaml
+#kube-apiserver.yaml  kube-scheduler.yaml
+#root@manager:/etc/kubernetes/manifests# rm sp-mas.yaml
+# ubuntu@manager:~/k8s/static-pods/sp-default-loc$ kubectl get pods
+#No resources found in default namespace.
+
+
