@@ -1,0 +1,7 @@
+steps to follow
+step1:
+need to create a service account user in the kubernetes-dashboard namespace
+step2:
+bind the cluster role(which is already available in the cluster) to the created SA user 
+step3:
+manually generate a secret of type service account token,in the kubernetes-dashboard namespace,and link it to SA user.the generated token is used to  log into the dashboard as that SA user
