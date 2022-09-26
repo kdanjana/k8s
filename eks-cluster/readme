@@ -1,0 +1,38 @@
+create a IAM user in aws with admin access and dl the users access key and secret key
+
+on ec2 instance
+   1. $ apt update  
+   2. $ apt install awscli -y
+   3.  $ ssh-keygen
+   4.  now install eksctl on ec2
+   5.  now configure aws cli===== $ aws configure
+                                  now give the keys u saved when u created the IAM user
+   6. vim eks-clutser-config.yaml
+   7. eksctl create cluster -f eks-clust.yaml
+   8. now install kubectl <here i installed v.1.23 version of kubectl>
+         curl -LO https://dl.k8s.io/release/v1.23.0/bin/linux/amd64/kubectl
+          chmod +x kubectl
+         mv kubectl /usr/bin/
+
+root@ip-172-31-25-7:~# ls -alrt
+total 40
+-..........
+
+drwxr-xr-x  2 root root 4096 Sep 26 04:51 .aws
+drwx------  2 root root 4096 Sep 26 05:00 .ssh
+.......
+drwxr-xr-x  3 root root 4096 Sep 26 05:34 .kube
+.........
+
+
+root@ip-172-31-25-7:~# kubectl get nodes
+NAME                                          STATUS   ROLES    AGE   VERSION
+ip-192-168-2-53.us-east-2.compute.internal    Ready    <none>   15m   v1.23.9-eks-ba74326
+ip-192-168-73-74.us-east-2.compute.internal   Ready    <none>   16m   v1.23.9-eks-ba74326
+    
+    9. delete eks cluster
+        $ ekscrl delete cluster -f eks-clust.yaml
+note:
+deployed nginx-ingress as load balancer service, lb is created on aws console
+
+Node groups – A Kubernetes abstraction for a group of nodes within a cluster. Node groups aren't a true Kubernetes resource, but they're found as an abstraction in the Cluster Autoscaler, Cluster API, and other components. Nodes that are found within a single node group might share several common properties such as labels and taints. However, they can still consist of more than one Availability Zone or instance type
