@@ -7,12 +7,13 @@ on ec2 instance
    4.  now install eksctl on ec2
    5.  now configure aws cli===== $ aws configure
                                   now give the keys u saved when u created the IAM user
-   6. vim eks-clutser-config.yaml
-   7. eksctl create cluster -f eks-clust.yaml
-   8. now install kubectl <here i installed v.1.23 version of kubectl>
+   6. now install kubectl <here i installed v.1.23 version of kubectl>
          curl -LO https://dl.k8s.io/release/v1.23.0/bin/linux/amd64/kubectl
           chmod +x kubectl
          mv kubectl /usr/bin/
+   7. vim eks-clutser-config.yaml
+   8. eksctl create cluster -f eks-clust.yaml
+   
 
 root@ip-172-31-25-7:~# ls -alrt
 total 40
