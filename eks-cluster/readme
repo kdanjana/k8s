@@ -5,6 +5,8 @@ on ec2 instance
    2. $ apt install awscli -y
    3.  $ ssh-keygen
    4.  now install eksctl on ec2
+       curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+        sudo mv /tmp/eksctl /usr/local/bin
    5.  now configure aws cli===== $ aws configure
                                   now give the keys u saved when u created the IAM user
    6. now install kubectl <here i installed v.1.23 version of kubectl>
