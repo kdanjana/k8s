@@ -1,0 +1,26 @@
+#ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image=busybox --restart=Never --dry-run=client -o yaml --env=a=b -- /bin/sh -c "sleep 300" > env2.yaml
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: p1
+  name: p1
+spec:
+  containers:
+  - args:
+    - /bin/sh
+    - -c
+    - sleep 300
+    env:
+    - name: a
+      value: b
+    image: busybox
+    name: p1
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
