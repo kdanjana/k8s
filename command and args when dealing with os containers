@@ -1,0 +1,77 @@
+#ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image busybox --restart=Never --dry-run=client -o yaml > cmnd.yaml -- /bin/sh -c "sleep 3000"
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: p1
+  name: p1
+spec:
+  containers:
+  - args:
+    - /bin/sh
+    - -c
+    - sleep 3000
+    image: busybox
+    name: p1
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+
+
+---------------------------------------------------
+
+
+#ubuntu@ip-172-31-25-116:~$ kubectl run p2 --image=busybox --restart=Never --dry-run=client -o yaml > cmmnd.yaml --command -- "sleep 32000"(env or ls or echo hii)
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: p2
+  name: p2
+spec:
+  containers:
+  - command:
+    - sleep 32000
+    image: busybox
+    name: p2
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+~
+~
+-----------------------------------
+
+ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image nginx --rm -it --restart=Never -- /bin/bash -c "ls"
+
+
+ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image nginx --rm -it --restart=Never -- /bin/bash -c "env"
+KUBERNETES_SERVICE_PORT_HTTPS=443
+KUBERNETES_SERVICE_PORT=443
+HOSTNAME=p1
+PWD=/
+PKG_RELEASE=1~bullseye
+HOME=/root
+KUBERNETES_PORT_443_TCP=tcp://10.96.0.1:443
+NJS_VERSION=0.7.6
+TERM=xterm
+SHLVL=0
+KUBERNETES_PORT_443_TCP_PROTO=tcp
+
+
+ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image nginx --rm -it --restart=Never -- /bin/bash -c "echo $HOSTNAME"
+ip-172-31-25-116
+pod "p1" deleted
+
+
+ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image nginx --rm -it --restart=Never -- /bin/bash -c "echo $PWD"
+/home/ubuntu
+pod "p1" deleted
+
+
