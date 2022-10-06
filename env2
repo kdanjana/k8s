@@ -1,4 +1,4 @@
-#ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image=busybox --restart=Never --dry-run=client -o yaml --env=a=b -- sleep 300 > env2.yaml
+#ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image=busybox --restart=Never --dry-run=client -o yaml --env="a=b" -- sleep 300 > env2.yaml
 
 
 
@@ -12,8 +12,8 @@ metadata:
 spec:
   containers:
   - args:
-    - sleep 
-    - 300
+    - "sleep" 
+    - "300"
     env:
     - name: a
       value: b
