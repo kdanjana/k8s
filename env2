@@ -24,3 +24,28 @@ spec:
   dnsPolicy: ClusterFirst
   restartPolicy: Never
 status: {}
+
+
+-----------------------------------------------------------------------------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: p1
+  name: p1
+spec:
+  containers:
+  - env:
+    - name: AA
+      value: abc
+    image: busybox
+    name: p1
+    resources: {}
+    #command: ["/bin/sh","-c","sleep 1200"]
+    args:
+    - "sleep"
+    - "1200"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
