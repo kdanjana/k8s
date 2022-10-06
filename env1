@@ -1,4 +1,4 @@
-#ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image=busybox --restart=Never --dry-run=client -o yaml --command -- ls > env1.yaml
+#ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image=busybox --restart=Never --dry-run=client -o yaml --command -- ls -l > env1.yaml
 
 
 apiVersion: v1
@@ -12,6 +12,7 @@ spec:
   containers:
   - command:
     - ls
+    - -l
     image: busybox
     name: p1
     resources: {}
