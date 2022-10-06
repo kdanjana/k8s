@@ -1,4 +1,4 @@
-#ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image busybox --restart=Never --dry-run=client -o yaml > cmnd.yaml -- /bin/sh -c "sleep 3000"
+#ubuntu@ip-172-31-25-116:~$ kubectl run p1 --image busybox --restart=Never --dry-run=client -o yaml -- sleep 3000 > cmnd.yaml 
 
 apiVersion: v1
 kind: Pod
@@ -10,9 +10,8 @@ metadata:
 spec:
   containers:
   - args:
-    - /bin/sh
-    - -c
-    - sleep 3000
+    - sleep 
+    - 3000
     image: busybox
     name: p1
     resources: {}
@@ -24,7 +23,7 @@ status: {}
 ---------------------------------------------------
 
 
-#ubuntu@ip-172-31-25-116:~$ kubectl run p2 --image=busybox --restart=Never --dry-run=client -o yaml > cmmnd.yaml --command -- "sleep 32000"(env or ls or echo hii)
+#ubuntu@ip-172-31-25-116:~$ kubectl run p2 --image=busybox --restart=Never --dry-run=client -o yaml  --command -- sleep 32000 > cmmnd.yaml
 
 
 apiVersion: v1
@@ -37,7 +36,8 @@ metadata:
 spec:
   containers:
   - command:
-    - sleep 32000
+    - "sleep" 
+    - "3200"
     image: busybox
     name: p2
     resources: {}
