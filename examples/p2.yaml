@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: p2
+  name: p2
+spec:
+  containers:
+  - name: c1
+    image: nginx
+    ports:
+    -  containerPort: 80
+    volumeMounts:
+    - name: v1
+      mountPath: /usr/share/nginx/html
+  - command: ["/bin/sh","-c","sleep 10;mkdir d1;cd d1;touch index.html; echo hello >index.html; sleep 1200"]
+    image: busybox
+    name: c2
+    resources: {}
+    volumeMounts:
+    - name: v1
+      mountPath: /d1
+  volumes:
+  - name: v1
+    emptyDir: {}
+
