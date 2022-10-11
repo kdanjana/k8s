@@ -1,3 +1,8 @@
+nginx ingress controller link::::
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/baremetal/deploy.yaml
+
+
+
 ubuntu@ip-172-31-25-116:~/k8s/ingress$ kubectl describe ingress ing
 Name:             ing
 Labels:           <none>
