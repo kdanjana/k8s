@@ -1,0 +1,22 @@
+Kubernetes Ingress is an API object that provides routing rules to manage external users' access to the services in a Kubernetes cluster, typically via HTTPS/HTTP.
+With Ingress, you can easily set up rules for routing traffic without creating a bunch of Load Balancers or exposing each service on the node. This makes it the best
+option to use in production environments. Ingress is made up of an Ingress API object and the Ingress Controller.Kubernetes Ingress is an API object that describes the
+desired state for exposing services to the outside of the Kubernetes cluster. An Ingress Controller is essential because it is the actual implementation of the Ingress 
+API. An Ingress Controller reads and processes the Ingress Resource information and usually runs as pods within the Kubernetes cluster.  
+
+An Ingress provides the following:
+Externally reachable URLs for applications deployed in Kubernetes clusters
+Name-based virtual host and URI-based routing support
+Load balancing rules and traffic, as well as SSL termination
+
+If Kubernetes Ingress is the API object that provides routing rules to manage external access to services, Ingress Controller is the actual implementation of the 
+Ingress API. The Ingress Controller is usually a load balancer for routing external traffic to your Kubernetes cluster and is responsible for L4-L7 Network Services. 
+
+Ingress
+Ingress enables you to consolidate the traffic-routing rules into a single resource and runs as part of a Kubernetes cluster. Some reasons Kubernetes Ingress is the preferred option for exposing a service in a production environment include the following:
+
+Traffic routing is controlled by rules defined on the Ingress Resource.
+Ingress is part of the Kubernetes cluster and runs as pods.
+An external Load Balancer is expensive, and you need to manage this outside the Kubernetes cluster. Kubernetes Ingress is managed from inside the cluster.
+In production environments, you typically use Ingress to expose applications to the Internet. An application is accessed from the Internet via Port 80 (HTTP) 
+or Port 443 (HTTPS), and Ingress is an object that allows access to your Kubernetes services from outside the Kubernetes cluster. 
