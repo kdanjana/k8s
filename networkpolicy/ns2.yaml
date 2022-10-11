@@ -1,0 +1,14 @@
+#can give labels to namespace also
+
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: ns2
+    ns: ns2
+  name: ns2
+
+  
+  
+#kubectl get ns --show-labels

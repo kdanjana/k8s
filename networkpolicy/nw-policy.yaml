@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: nw-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: pod
+  policyTypes:
+    - Ingress   #defining rules on incoming traffic for pod with label app:pod
+  ingress:
+    - from:
+       #- namespaceSelector:
+       #    matchLabels:
+       #      ns: ns2
+        - podSelector:
+            matchLabels:
+              app: wp-dep1  #only pods with app:wp-dep1 label can communicate with pods with label app:pod
+      ports:
+        - protocol: TCP
+          port: 3306
+ 
+
+
+# allows connections from Pods in the local Namespace with the label app=wp-dep1, or from any Pod in any namespace with the label ns=ns2
