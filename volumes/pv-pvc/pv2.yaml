@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv2
+spec:
+  storageClassName: pv2
+  capacity:
+    storage: 60Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/pv/data2"
+
+
