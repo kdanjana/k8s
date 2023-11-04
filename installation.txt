@@ -1,0 +1,75 @@
+This shows how to install a 3 node kubeadm cluster on AWS EC2 instances. The EC2 instance configuration used is:
+Instance type: t3.medium
+Operating System: Ubuntu 22.04 
+Storage: gp2, 8GB
+(on control plane and node1 and node2)
+step1:
+Host names set on the nodes: controlplane, node01, node02 . 
+Command used to set hostname is $sudo hostnamectl set-hostname <host-name>
+
+(on control plane and node1 and node2)
+step2:
+Install latest version of kubectl 
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin
+kubectl version
+
+(on control plane and node1 and node2)
+step3:
+no need  disable swap, since EC2 instances are by default with swap disabled.
+
+(on control plane and node1 and node2)
+step4:
+Update the apt package index and install packages needed to use the Kubernetes apt repository:
+apt-get update
+apt-get install -y apt-transport-https ca-certificates curl
+
+Set up the required kernel modules and make them persistent:
+cat <<EOF > /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+
+modprobe overlay
+modprobe br_netfilter
+
+Set the required kernel parameters and make them persistent:
+cat <<EOF > /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward                 = 1
+EOF
+
+sysctl --system
+
+Install the container runtime:
+apt-get install -y containerd
+Configure the container runtime to use systemd Cgroups:
+mkdir -p /etc/containerd
+containerd config default > /etc/containerd/config.toml
+Edit the configuration to set up CGroups:
+    vi /etc/containerd/config.toml
+        Scroll down till you find a line with SystemdCgroup = false. Edit it to be SystemdCgroup = true, then save and exit vi
+Restart containerd
+    systemctl restart containerd
+
+(on control plane and node1 and node2)
+step5:
+install kubelet, kubeadm and kubectl, and pin their version
+KUBE_LATEST=$(curl -L -s https://dl.k8s.io/release/stable.txt | awk 'BEGIN { FS="." } { printf "%s.%s", $1, $2 }')
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://pkgs.k8s.io/core:/stable:/${KUBE_LATEST}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${KUBE_LATEST}/deb/ /" > /etc/apt/sources.list.d/kubernetes.list
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+apt-mark hold kubelet kubeadm kubectl
+
+only on control plane
+step6:
+boot up control plane
+kubeadm init
+Install network plugin (weave)
+kubectl --kubeconfig /etc/kubernetes/admin.conf apply -f "https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s-1.11.yaml"
+
+
